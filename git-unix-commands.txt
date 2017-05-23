@@ -1,0 +1,104 @@
+TIPS
+Always fetch before you work (First thing in the morning)
+fetch before you push
+fetch ofen
+Try to keep branches in sync with master branch by merging often
+GIT checkout says "Go to the repository, get the named thing that i gave you and make my working directory look like that"
+GIT generates its sha from the entire commit operation. Each time the commit is changed i.e using git commit --amend, a new sha is generated
+
+UNIX CL
+grep (global regular expression search)
+%USERPROFILE% or ~ for home directory
+ls -la <optional directory path> (List all Directories and files including hidden files, this is same as dir on windows)
+cat <filename> (open up a file and view its content)
+Minus Sign+shift+s+return (Toggle fold/chop long lines in the less pager (or Use -r in global config))
+
+GIT GENERAL
+changeset
+which git (location of GIT)
+git --version (GIT version)
+git config --global color.ui true
+q (Exit running command)
+
+VIM
+ESC (Stop editing)
+a (start editing)
+ZZ (Save edits and return to GIT Bash)
+
+COMMITS
+git log (View all commit logs)
+git log <optional_repository_name>
+git log -n <number> (Limit the returned commit logs to number)
+git log --since=<date> (e.g 2012-06-15, return all commits since date but not including this date)
+git log --until=<date> (e.g 2012-06-15, return all commits until date)
+git log --author=<name> (Search for commits by author)
+git log --grep=<string> (Search commit logs for a regex string)
+git log --oneline (Get commit logs on one line each)
+
+
+FILE CHANGES
+git add
+git commit -am <"Commit Log"> (Add changes to staging index and commit. This does not work for new or deleted files)
+git commit -m <"Commit Log">
+git status
+git diff
+git diff --color-words
+git diff --staged
+git rm <file> (Remove (Delete) a file)
+git mv <source> <destination> (Move/Rename a file)
+git show <commit_log_id> (Show details of a commit with <commit_log_id>)
+git log --graph --oneline --all --decorate
+
+Undoing Changes
+git checkout -- <filename> (Restore filename in working directory to the copy in the repository)
+# -- Tells git to stay on the current branch
+git reset HEAD <filename> (Unstage <filename>)
+git commit --amend (Amend the LAST commit to reflect new changes)
+#This would be used if i made a commit but now want to modify the changes to the file, or the commit log message)
+git checkout <sha> -- <filename> (Retrieve old version of <filename> from the commit log with id <sha>, and adds the file to staging ready to be commited. This can be used to revert a file to it's previous version)
+#GIT doesn't let you hide your mistakes. Instead of overwriting a commit, you would retrieve the old version in the llog and checkout that file
+git revert <sha> (Revert to a previous commit with id <sha>)
+git revert <sha> -n (Revert to a previous commit with id <sha>. -n will make git not commit immediately)
+git reset --<soft|mixed|hard> <sha> (Reset HEAD pointer to a different commit with id <sha> in the commit log)
+#DANGEROUS COMMANDS. ALWAYS COPY RECENT LOG BEFORE USING THESE COMMANDS
+
+BRANCHING & REMOTE
+git branch -r (show remote branches)
+git branch -a (Show all branches including remote branches)
+
+BRANCHING AND FILE CHANGES
+git diff <outdated_branch>..<up_to_date_branch> (compare changes in <outdated_branch> to <up_to_date_branch> )
+
+BRANCHING
+git branch (show local branches)
+git branch <new_local_branch_alias> <origin_branch> (create a new branch <new_local_branch_alias> from <origin_branch>). (Origin branch can be HEAD to default to the tip of the current repository))
+*git checkout -b <new_local_branch_alias> <optional source_branch> (Create a new branch <new_local_branch_alias> from current branch or <source_branch> and switch to new branch). This is preferred to git branch <new_local_branch_alias> <origin_branch>
+git branch -d <branch_name> (Delete a branch)
+git branch --set-upstream <local_branch_alias> <remote_branch_alias> (Make non tracking branch track remote branch)
+
+REMOTE
+git remote (view all remotes (remote repositories))
+git remote add <alias> <url>
+git remote -v (verbose, show url for fetching and pushing)
+git remote rm <alias> (remove remote repository <alias>)
+git push -u <remote_branch_alias> <local_repository_alias> <(Create new branch <local_repository_alias> on remote branch <remote_branch_alias>)
+git clone <url> <optional repository name> (Create local copy of remote repository)
+#git clone <url> -b <remote_branch_alias> (Create local copy of <remote_branch_alias> from remote repository)
+
+BRANCHING & MERGING
+git branch --merge <commit> (Only list branches whose tips are reachable from the specified commit (HEAD if not specified))
+
+MERGE
+--First checkout the branch that changes will be merged into
+--After resolving a merge conflict manually, add and commit the changed file
+git merge <sending_branch>
+git pull (git fetch + git merge)
+git merge --no-ff (Ensure a commit is made when merging)
+git merge --ff-only (Only merge is it's a fast forward merge)
+git merge --abort
+git mergetool (list all mergetools)
+git mergetool --tool=<mergetool> (indicate which mergetool to use to resolve merge conflicts)
+
+DELETE
+git push <remote_origin> :<local_branch_alias> (Remove remote branch <local_branch_alias>. This does not remove the branch in the working directory)
+*git push origin --delete <local_branch_alias> (Remove remote branch <local_branch_alias>. This is preferred to git push <remote_origin> :<local_branch_alias>)
