@@ -30,13 +30,13 @@ public class NoteItem{
     public static NoteItem getNew(){
         Locale locale = new Locale("en_US");
         Locale.setDefault(locale);
-        String pattern = ("yyyy-MM-dd HH:mm:ss Z");
+        String pattern = "yyyy-MM-dd HH:mm:ss Z";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         String key = formatter.format(new Date());
 
         NoteItem note = new NoteItem();
         note.setKey(key);
-        note.setKey("");
+        note.setText("");
 
         return note;
 

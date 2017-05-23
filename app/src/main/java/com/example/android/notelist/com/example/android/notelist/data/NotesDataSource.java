@@ -25,7 +25,7 @@ public class NotesDataSource {
     }
 
     public List<NoteItem> findAll(){
-
+int i = 0;
         Map<String,?> notesMap = notePrefs.getAll();
 
         SortedSet<String> keys = new TreeSet<String>(notesMap.keySet());
@@ -35,9 +35,12 @@ public class NotesDataSource {
         for (String key: keys) {
             Log.d("CREATION", "it reaches here again");
             NoteItem note = new NoteItem();
+            //note = NoteItem.getNew();
             note.setKey(key);
             note.setText((String)notesMap.get(key));
             noteList.add(note);
+            //Log.d("CREATION", "this is what you typed: " + noteList.get(i).toString());
+            i++;
         }
 
         //NoteItem note = NoteItem.getNew();

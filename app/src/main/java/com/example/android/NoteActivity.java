@@ -73,11 +73,13 @@ public class NoteActivity extends AppCompatActivity {
 
                 Object o = list.getItemAtPosition(position);
 
+                //Log.d("CREATION", "position is: " + position);
                 //createNote();
                 itClicked(position);
             }
         });
-        //refreshDisplay();
+
+        refreshDisplay();
     }
 
 
@@ -86,8 +88,10 @@ public class NoteActivity extends AppCompatActivity {
         //registerForContextMenu(list);
         // android_versions = getResources().getStringArray(R.array.android_versions);
         notesList = dataSource.findAll();
-        ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(getApplicationContext(), R.layout.list_item_layout, R.id.note_layout, notesList);
-        //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
+
+        //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(getApplicationContext(), R.layout.list_item_layout, R.id.note_layout, notesList);
+        ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
+
         list.setAdapter(adaptor);
         //setListAdapter(adaptor);
     }
@@ -130,9 +134,11 @@ public class NoteActivity extends AppCompatActivity {
         // Log.d("CREATION","intent continue works");
         //notesList.add(note);
         //notes.notifyDataSetChanged();
-        //refreshDisplay();
-        notesList = dataSource.findAll();
-        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
+
+        //notesList = dataSource.findAll();
+
+            startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
+            //refreshDisplay();
 
     }
 
@@ -141,6 +147,7 @@ public class NoteActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
         intent.putExtra("text", note.getText());
+        //currentNoteId = position;
         startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
     }
 
@@ -158,10 +165,12 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+        //super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        currentNoteId = (int)info.id;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.contextual_menu, menu);
-
+        //Log.d("CREATION", "Node id is: " + currentNoteId);
     }
 
     @Override
