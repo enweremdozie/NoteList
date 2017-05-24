@@ -22,6 +22,8 @@
             android:label="List"></activity>
         <activity android:name="com.example.android.NoteEditorActivity"
             />
+        <activity android:name="com.example.android.ListActivityEditor"
+            />
     </application>
 
 </manifest>

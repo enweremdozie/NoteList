@@ -3,7 +3,6 @@ package com.example.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,7 +68,7 @@ public class NoteActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Log.d("CREATION","click works");
+                //Log.d("CREATION","click works");
 
                 Object o = list.getItemAtPosition(position);
 
@@ -177,7 +176,7 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
         if(item.getItemId() == delete_note){
-            Log.d("CREATION","context selected");
+            //Log.d("CREATION","context selected");
             NoteItem note = notesList.get(currentNoteId);
             dataSource.remove(note);
             refreshDisplay();
