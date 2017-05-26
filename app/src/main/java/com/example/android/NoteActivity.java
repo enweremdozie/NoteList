@@ -39,6 +39,7 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.setTitle("Note");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         list = (ListView)findViewById(R.id.list_view);

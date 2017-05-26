@@ -51,21 +51,36 @@ public class GridActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_view);
-        Log.d("CREATION", "grid adapter is never ever created");
+        gridView = (GridView) findViewById(R.id.gridView1);
+        //Log.d("CREATION", "grid adapter is never ever created");
         registerForContextMenu(gridView);
         dataSource = new NotesDataSource(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        /*gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int position, long id) {
+                // TODO Auto-generated method stub
+
+                Log.d("CREATION", "long clicked worked");
+                //registerForContextMenu(gridView);
+                currentNoteId = position;
+                return true;
+            }
+        });*/
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Log.d("CREATION", "click works");
+                //currentNoteId = position;
                 itClicked(position);
             }
         });
 
-        Log.d("CREATION", "grid adapter is never created");
+        //Log.d("CREATION", "grid adapter is never created");
         refreshDisplay();
 
     }
@@ -75,14 +90,14 @@ public class GridActivity extends AppCompatActivity {
     private void refreshDisplay() {
 
         notesList = dataSource.findAll();
-        Log.d("CREATION", "grid adapter is not even created");
+        //Log.d("CREATION", "grid adapter is not even created");
         madapter = new GridAdaptor(this, notesList);
-        Log.d("CREATION", "grid adapter is not created");
-        gridView = (GridView) findViewById(R.id.gridView1);
-        Log.d("CREATION", "grid adapter is still not created");
+        //Log.d("CREATION", "grid adapter is not created");
+
+        //Log.d("CREATION", "grid adapter is still not created");
         gridView.setAdapter(madapter);
         //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
-        Log.d("CREATION", "grid adapter is created");
+        //Log.d("CREATION", "grid adapter is created");
         //list.setAdapter(adaptor);
     }
 
@@ -143,7 +158,7 @@ public class GridActivity extends AppCompatActivity {
             note.setKey(data.getStringExtra("key"));
             note.setText(data.getStringExtra("text"));
             dataSource.update(note);
-            //refreshDisplay();
+            refreshDisplay();
         }
     }
 
@@ -162,7 +177,7 @@ public class GridActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
         if(item.getItemId() == delete_note){
-            //Log.d("CREATION","context selected");
+            Log.d("CREATION","context selected: " + currentNoteId);
             NoteItem note = notesList.get(currentNoteId);
             dataSource.remove(note);
             refreshDisplay();
@@ -216,7 +231,7 @@ class GridAdaptor extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         // TODO Auto-generated method stub
-        return 0;
+        return position;
     }
 
     public static class ViewHolder
@@ -247,14 +262,7 @@ class GridAdaptor extends BaseAdapter {
         }
 
         view.txtViewTitle.setText(note.get(position).toString());
-        /*NoteItem note = NoteItem.getNew();
 
-        Intent intent = new Intent(convertView.getContext(), NoteEditorActivity.class);
-        intent.putExtra("key", note.getKey());
-        intent.putExtra("text", note.getText());
-
-
-        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);*/
 
         return convertView;
     }

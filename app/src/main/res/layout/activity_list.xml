@@ -8,7 +8,8 @@
     android:id="@+id/activity_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.ListActivity">
+    tools:context="com.example.android.ListActivity"
+    android:background="#FFFDE7">
 
     <ListView
         android:id="@+id/list_todo"
@@ -17,7 +18,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:clickable="true"
-        android:longClickable="true">
+        android:longClickable="true"
+        android:background="#FFFDE7">
 
     </ListView>
 
