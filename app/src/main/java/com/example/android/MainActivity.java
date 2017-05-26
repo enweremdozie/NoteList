@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("NOTES", note.getKey());
 
        public void openNote(View view){
-        Intent i = new Intent(this, NoteActivity.class);
+        Intent i = new Intent(this, GridActivity.class);
            startActivity(i);
     }
 

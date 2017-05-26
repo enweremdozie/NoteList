@@ -1,18 +1,23 @@
 package com.example.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.android.notelist.R;
 import com.example.android.notelist.com.example.android.notelist.data.NoteItem;
@@ -24,76 +29,61 @@ import static com.example.android.notelist.R.id.delete_note;
 import static com.example.android.notelist.R.id.share_note;
 
 
-public class NoteActivity extends AppCompatActivity {
+public class GridActivity extends AppCompatActivity {
     public static final int EDITOR_ACTIVITY_REQUEST = 1001;
     private static final int MENU_DELETE_ID = 1002;
     NotesDataSource dataSource;
     private List<NoteItem> notesList;
-    ListView list;
+
     ArrayAdapter<NoteItem> adaptor;
 
     private int currentNoteId;
     EditText editText;
     ArrayAdapter<NoteItem> notes;
 
+    private GridAdaptor madapter;
+    private GridView gridView;
+
+    GridView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);
-        list = (ListView)findViewById(R.id.list_view);
-        registerForContextMenu(list);
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.grid_view);
+        Log.d("CREATION", "grid adapter is never ever created");
+        registerForContextMenu(gridView);
         dataSource = new NotesDataSource(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long id) {
-                // TODO Auto-generated method stub
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Log.d("CREATION", "long clicked worked");
-                lv = (ListView) findViewById(R.id.list);
-                registerForContextMenu(lv);
-                //longClick();
-                return true;
-            }
-        });*/
-
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                //Log.d("CREATION","click works");
-
-                Object o = list.getItemAtPosition(position);
-
-                Log.d("CREATION", "position is: " + position);
-                //createNote();
                 itClicked(position);
             }
         });
 
+        Log.d("CREATION", "grid adapter is never created");
         refreshDisplay();
+
     }
+
 
 
     private void refreshDisplay() {
 
-        //registerForContextMenu(list);
-        // android_versions = getResources().getStringArray(R.array.android_versions);
         notesList = dataSource.findAll();
-
-        //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(getApplicationContext(), R.layout.list_item_layout, R.id.note_layout, notesList);
-        ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
-
-        list.setAdapter(adaptor);
-        //setListAdapter(adaptor);
+        Log.d("CREATION", "grid adapter is not even created");
+        madapter = new GridAdaptor(this, notesList);
+        Log.d("CREATION", "grid adapter is not created");
+        gridView = (GridView) findViewById(R.id.gridView1);
+        Log.d("CREATION", "grid adapter is still not created");
+        gridView.setAdapter(madapter);
+        //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
+        Log.d("CREATION", "grid adapter is created");
+        //list.setAdapter(adaptor);
     }
 
     @Override
@@ -103,24 +93,19 @@ public class NoteActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_create){
+        if (id == R.id.action_create) {
             //Log.d("CREATION", "enters options");
             createNote();
-        }
-
-        else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
     private void createNote() {
         //Log.d("CREATION","intent start works");
@@ -137,8 +122,8 @@ public class NoteActivity extends AppCompatActivity {
 
         //notesList = dataSource.findAll();
 
-            startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
-            //refreshDisplay();
+        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
+        //refreshDisplay();
 
     }
 
@@ -158,7 +143,7 @@ public class NoteActivity extends AppCompatActivity {
             note.setKey(data.getStringExtra("key"));
             note.setText(data.getStringExtra("text"));
             dataSource.update(note);
-            refreshDisplay();
+            //refreshDisplay();
         }
     }
 
@@ -166,7 +151,7 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         //super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        GridView.AdapterContextMenuInfo info = (GridView.AdapterContextMenuInfo) menuInfo;
         currentNoteId = (int)info.id;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.contextual_menu, menu);
@@ -203,3 +188,76 @@ public class NoteActivity extends AppCompatActivity {
 
 
 
+class GridAdaptor extends BaseAdapter {
+    private List<NoteItem> note;
+    //private ArrayList<Integer> listFlag;
+    private Activity activity;
+    public static final int EDITOR_ACTIVITY_REQUEST = 1001;
+
+
+    public GridAdaptor(Activity activity,List<NoteItem> note) {
+        super();
+        this.note = note;
+        this.activity = activity;
+    }
+
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return note.size();
+    }
+
+    @Override
+    public NoteItem getItem(int position) {
+        // TODO Auto-generated method stub
+        return note.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public static class ViewHolder
+    {
+        //public ImageView imgViewFlag;
+        public TextView txtViewTitle;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        ViewHolder view;
+        LayoutInflater inflator = activity.getLayoutInflater();
+
+        if(convertView==null)
+        {
+            view = new ViewHolder();
+            convertView = inflator.inflate(R.layout.grids, null);
+
+            view.txtViewTitle = (TextView) convertView.findViewById(R.id.textView1);
+            //view.imgViewFlag = (ImageView) convertView.findViewById(R.id.imageView1);
+
+            convertView.setTag(view);
+        }
+        else
+        {
+            view = (ViewHolder) convertView.getTag();
+        }
+
+        view.txtViewTitle.setText(note.get(position).toString());
+        /*NoteItem note = NoteItem.getNew();
+
+        Intent intent = new Intent(convertView.getContext(), NoteEditorActivity.class);
+        intent.putExtra("key", note.getKey());
+        intent.putExtra("text", note.getText());
+
+
+        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);*/
+
+        return convertView;
+    }
+
+
+}

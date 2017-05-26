@@ -24,6 +24,8 @@
             />
         <activity android:name="com.example.android.ListActivityEditor"
             />
+        <activity android:name="com.example.android.GridActivity"
+            />
     </application>
 
 </manifest>

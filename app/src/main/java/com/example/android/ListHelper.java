@@ -15,7 +15,8 @@ public class ListHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTable = "CREATE TABLE " + Task.TaskEntry.TABLE + " ( " +
                                                Task.TaskEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                               Task.TaskEntry.COL_TASK_TITLE + " TEXT NOT NULL);";
+                                               Task.TaskEntry.COL_TASK_TITLE + " TEXT NOT NULL, " +
+                                               Task.TaskEntry.LIST_POSITION + " INTEGER));";
         sqLiteDatabase.execSQL(createTable);
     }
 

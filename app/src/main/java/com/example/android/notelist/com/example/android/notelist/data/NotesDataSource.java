@@ -25,7 +25,7 @@ public class NotesDataSource {
     }
 
     public List<NoteItem> findAll(){
-int i = 0;
+        int i = 0;
         Map<String,?> notesMap = notePrefs.getAll();
 
         SortedSet<String> keys = new TreeSet<String>(notesMap.keySet());

@@ -10,6 +10,6 @@ public class Task {
     public class TaskEntry implements BaseColumns {
         public static final String TABLE = "tasks";
         public static final String COL_TASK_TITLE = "title";
-
+        public static final int LIST_POSITION = 0;
     }
 }

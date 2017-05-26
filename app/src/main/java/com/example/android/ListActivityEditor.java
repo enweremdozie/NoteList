@@ -26,7 +26,9 @@ public class ListActivityEditor extends AppCompatActivity {
     private ListHelper mHelper;
     private ListView mTaskListView;
     private ArrayAdapter<String> mAdapter;
-
+    public int position;
+    String origin;
+    String activityTitle;
 
 
  @Override
@@ -34,15 +36,30 @@ public class ListActivityEditor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_list);
-        String activityTitle = intent.getExtras().getString("title");
+        activityTitle = intent.getExtras().getString("title");
+        position = intent.getExtras().getInt("position");
+
         this.setTitle(activityTitle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHelper = new ListHelper(this);
         mTaskListView = (ListView) findViewById(R.id.list_todo);
-        updateUI();
+        origin = intent.getExtras().getString("state");
+
+     /*if(origin == "create"){
+         updateUI();
+
+     }
+
+     else if (origin == "click"){
+         //getDataBase();
+
+     }*/
+     //updateUI();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +72,7 @@ public class ListActivityEditor extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
         }
 
@@ -71,10 +88,11 @@ public class ListActivityEditor extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 String listName = String.valueOf(taskEditText.getText());
-                                nameOfList(listName);
+                                //nameOfList(listName);
                                 SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
                                 values.put(Task.TaskEntry.COL_TASK_TITLE, listName);
+
                                 sQLiteDatabase.insertWithOnConflict(Task.TaskEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                                 sQLiteDatabase.close();
                                 updateUI();
@@ -94,12 +112,9 @@ public class ListActivityEditor extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void nameOfList(String listName) {
-
-        this.setTitle(listName);
-    }
 
     public void updateUI(){
+
         ArrayList<String> taskList = new ArrayList<>();
         SQLiteDatabase sQLiteDatabase = mHelper.getReadableDatabase();
         Cursor cursor = sQLiteDatabase.query(Task.TaskEntry.TABLE,
@@ -122,6 +137,7 @@ public class ListActivityEditor extends AppCompatActivity {
 
         cursor.close();
         sQLiteDatabase.close();
+
     }
 
     public void deleteTask(View view){

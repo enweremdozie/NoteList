@@ -3,17 +3,21 @@
 <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context="com.example.android.ListActivity">
 
     <ListView
-        android:layout_width="wrap_content"
+        android:id="@+id/list_todo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_todo">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:longClickable="true">
 
     </ListView>
 
