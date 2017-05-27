@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,11 +39,24 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHelper = new ListHelper(this);
         mTaskListView = (ListView) findViewById(R.id.list_todo);
         //updateUI();
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.list_bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if(item.getItemId() == R.id.notes) {
+                    callNotesActivity();
+                }
+
+                return true;
+            }
+        });
 
         mTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -62,7 +77,11 @@ public class ListActivity extends AppCompatActivity {
         updateUI();
 
     }
+    private void callNotesActivity(){
+        Intent i = new Intent(this, GridActivity.class);
+        startActivity(i);
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.create_note, menu);

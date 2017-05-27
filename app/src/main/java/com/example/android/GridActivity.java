@@ -3,6 +3,8 @@ package com.example.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -55,8 +57,22 @@ public class GridActivity extends AppCompatActivity {
         //Log.d("CREATION", "grid adapter is never ever created");
         registerForContextMenu(gridView);
         dataSource = new NotesDataSource(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    if(item.getItemId() == R.id.list_menu) {
+                        callListActivity();
+                    }
+
+                return true;
+            }
+        });
         /*gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
@@ -85,7 +101,11 @@ public class GridActivity extends AppCompatActivity {
 
     }
 
+        private void callListActivity(){
+            Intent j = new Intent(this, ListActivity.class);
+            startActivity(j);
 
+        }
 
     private void refreshDisplay() {
 
