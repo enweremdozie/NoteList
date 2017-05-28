@@ -151,6 +151,8 @@ public class GridActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
         intent.putExtra("text", note.getText());
+        intent.putExtra("longi_tude", note.getLongi_tude(0));
+        intent.putExtra("lati_tude", note.getLati_tude(0));
         // Log.d("CREATION","intent continue works");
         //notesList.add(note);
         //notes.notifyDataSetChanged();
@@ -167,6 +169,8 @@ public class GridActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
         intent.putExtra("text", note.getText());
+        intent.putExtra("longi_tude", note.getLongi_tude(0));
+        intent.putExtra("lati_tude", note.getLati_tude(0));
         //currentNoteId = position;
         startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
     }
@@ -177,6 +181,8 @@ public class GridActivity extends AppCompatActivity {
             NoteItem note  = new NoteItem();
             note.setKey(data.getStringExtra("key"));
             note.setText(data.getStringExtra("text"));
+            note.setLongi_tude(data.getDoubleExtra("longi_tude", 0));
+            note.setLati_tude(data.getDoubleExtra("lati_tude", 0));
             dataSource.update(note);
             refreshDisplay();
         }

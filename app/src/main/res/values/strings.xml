@@ -8,6 +8,8 @@
     <string name="note_share">Share</string>
     <string name="lower_menu">Notes</string>
     <string name="list_lower_menu">List</string>
+    <string name="location">Add location</string>
+    <string name="loc">Get location</string>
 
 
     <!--string-array name="android_versions">

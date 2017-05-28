@@ -2,7 +2,6 @@ package com.example.android.notelist.com.example.android.notelist.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class NotesDataSource {
         List<NoteItem> noteList = new ArrayList<NoteItem>();
 
         for (String key: keys) {
-            Log.d("CREATION", "it reaches here again");
+            //Log.d("CREATION", "it reaches here again");
             NoteItem note = new NoteItem();
             //note = NoteItem.getNew();
             note.setKey(key);
