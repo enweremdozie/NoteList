@@ -32,8 +32,6 @@ public class ListActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +43,12 @@ public class ListActivity extends AppCompatActivity {
         mTaskListView = (ListView) findViewById(R.id.list_todo);
         //updateUI();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.list_bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if(item.getItemId() == R.id.notes) {
+                if (item.getItemId() == R.id.notes) {
                     callNotesActivity();
                 }
 
@@ -59,7 +57,6 @@ public class ListActivity extends AppCompatActivity {
         });
 
         mTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 
 
             @Override
@@ -77,11 +74,12 @@ public class ListActivity extends AppCompatActivity {
         updateUI();
 
     }
-    private void callNotesActivity(){
+
+    private void callNotesActivity() {
         Intent i = new Intent(this, GridActivity.class);
         startActivity(i);
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.create_note, menu);
@@ -95,9 +93,7 @@ public class ListActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        }
-
-        else if (id == R.id.action_create) {
+        } else if (id == R.id.action_create) {
             switch (item.getItemId()) {
                 case R.id.action_create:
                     final EditText taskEditText = new EditText(this);
@@ -134,25 +130,23 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
-
-    public void updateUI(){
+    public void updateUI() {
         ArrayList<String> taskList = new ArrayList<>();
         Log.d("CREATION", "reaches 1");
         SQLiteDatabase sQLiteDatabase = mHelper.getReadableDatabase();
         Log.d("CREATION", "reaches 2");
         Cursor cursor = sQLiteDatabase.query(ListNames.ListEntry.TABLE,
-                new String[] {ListNames.ListEntry._ID, ListNames.ListEntry.COL_TASK_TITLE}, null, null, null, null, null);
+                new String[]{ListNames.ListEntry._ID, ListNames.ListEntry.COL_TASK_TITLE}, null, null, null, null, null);
         Log.d("CREATION", "reaches 3");
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int index = cursor.getColumnIndex(ListNames.ListEntry.COL_TASK_TITLE);
             taskList.add(cursor.getString(index));
         }
         Log.d("CREATION", "reaches 4");
-        if(mAdapter == null){
+        if (mAdapter == null) {
             mAdapter = new ArrayAdapter<>(this, R.layout.item_todo, R.id.task_title, taskList);
             mTaskListView.setAdapter(mAdapter);
-        }
-        else {
+        } else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
@@ -163,12 +157,12 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    public void deleteTask(View view){
+    public void deleteTask(View view) {
         View parent = (View) view.getParent();
         TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTextView.getText());
         SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
-        sQLiteDatabase.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE + " = ?", new String[] {task});
+        sQLiteDatabase.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE + " = ?", new String[]{task});
         sQLiteDatabase.close();
         updateUI();
     }

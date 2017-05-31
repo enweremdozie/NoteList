@@ -28,21 +28,19 @@ public class NoteActivity extends AppCompatActivity {
     public static final int EDITOR_ACTIVITY_REQUEST = 1001;
     private static final int MENU_DELETE_ID = 1002;
     NotesDataSource dataSource;
-    private List<NoteItem> notesList;
     ListView list;
     ArrayAdapter<NoteItem> adaptor;
-
-    private int currentNoteId;
     EditText editText;
     ArrayAdapter<NoteItem> notes;
-
+    private List<NoteItem> notesList;
+    private int currentNoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.setTitle("Note");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        list = (ListView)findViewById(R.id.list_view);
+        list = (ListView) findViewById(R.id.list_view);
         registerForContextMenu(list);
 
         dataSource = new NotesDataSource(this);
@@ -67,7 +65,6 @@ public class NoteActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
-
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 //Log.d("CREATION","click works");
@@ -90,11 +87,11 @@ public class NoteActivity extends AppCompatActivity {
         // android_versions = getResources().getStringArray(R.array.android_versions);
         notesList = dataSource.findAll();
 
-        //ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(getApplicationContext(), R.layout.list_item_layout, R.id.note_layout, notesList);
+        //ArrayAdapter<NoteItem> adapter = new ArrayAdapter<NoteItem>(getApplicationContext(), R.layout.list_item_layout, R.id.note_layout, notesList);
         ArrayAdapter<NoteItem> adaptor = new ArrayAdapter<NoteItem>(this, R.layout.list_item_layout, notesList);
 
         list.setAdapter(adaptor);
-        //setListAdapter(adaptor);
+        //setListAdapter(adapter);
     }
 
     @Override
@@ -109,12 +106,10 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_create){
+        if (id == R.id.action_create) {
             //Log.d("CREATION", "enters options");
             createNote();
-        }
-
-        else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
@@ -138,12 +133,12 @@ public class NoteActivity extends AppCompatActivity {
 
         //notesList = dataSource.findAll();
 
-            startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
-            //refreshDisplay();
+        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
+        //refreshDisplay();
 
     }
 
-    public void itClicked(int position){
+    public void itClicked(int position) {
         NoteItem note = notesList.get(position);
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
@@ -153,9 +148,9 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == EDITOR_ACTIVITY_REQUEST && resultCode == RESULT_OK){
-            NoteItem note  = new NoteItem();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDITOR_ACTIVITY_REQUEST && resultCode == RESULT_OK) {
+            NoteItem note = new NoteItem();
             note.setKey(data.getStringExtra("key"));
             note.setText(data.getStringExtra("text"));
             dataSource.update(note);
@@ -168,7 +163,7 @@ public class NoteActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         //super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        currentNoteId = (int)info.id;
+        currentNoteId = (int) info.id;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.contextual_menu, menu);
         //Log.d("CREATION", "Node id is: " + currentNoteId);
@@ -177,14 +172,12 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        if(item.getItemId() == delete_note){
+        if (item.getItemId() == delete_note) {
             //Log.d("CREATION","context selected");
             NoteItem note = notesList.get(currentNoteId);
             dataSource.remove(note);
             refreshDisplay();
-        }
-
-        else if(item.getItemId() == share_note){
+        } else if (item.getItemId() == share_note) {
             NoteItem note = notesList.get(currentNoteId);
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);

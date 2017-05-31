@@ -8,9 +8,6 @@ import android.view.View;
 import com.example.android.notelist.R;
 
 public class MainActivity extends AppCompatActivity {
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +16,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    //Log.i("NOTES", note.getKey());
 
-
-        //Log.i("NOTES", note.getKey());
-
-       public void openNote(View view){
+    public void openNote(View view) {
         Intent i = new Intent(this, GridActivity.class);
-           startActivity(i);
+        startActivity(i);
     }
 
-    public void openList(View view){
+    public void openList(View view) {
         Intent j = new Intent(this, ListActivity.class);
         startActivity(j);
     }

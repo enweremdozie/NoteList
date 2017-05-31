@@ -4,16 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by dozie on 2017-05-11.
- */
 
 public class NoteItem{
 
     private String key;
     private String text;
-    private double longi_tude;
-    private double lati_tude;
+    private double longitude;
+    private double latitude;
 
 
     public String getKey(){
@@ -31,19 +28,19 @@ public class NoteItem{
         this.text = text;
     }
 
-    public void setLongi_tude(double longi_tude){
-        this.longi_tude = longi_tude;
+    public void setLongitude(double longitude){
+        this.longitude = longitude;
     }
 
-    public double getLongi_tude(double longi_tude){
-        return longi_tude;
+    public double getLongitude(double longitude){
+        return longitude;
     }
-    public void setLati_tude(double lati_tude){
-        this.lati_tude = lati_tude;
+    public void setLatitude(double latitude){
+        this.latitude = latitude;
     }
 
-    public double getLati_tude(double lati_tude){
-        return lati_tude;
+    public double getLatitude(double latitude){
+        return latitude;
     }
 
     public static NoteItem getNew(){
@@ -56,8 +53,8 @@ public class NoteItem{
         NoteItem note = new NoteItem();
         note.setKey(key);
         note.setText("");
-        note.setLati_tude(0);
-        note.setLongi_tude(0);
+        note.setLatitude(0);
+        note.setLongitude(0);
 
         return note;
 

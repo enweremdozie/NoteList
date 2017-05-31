@@ -31,7 +31,7 @@ public class ListActivityEditor extends AppCompatActivity {
     String activityTitle;
 
 
- @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -56,9 +56,8 @@ public class ListActivityEditor extends AppCompatActivity {
          //getDataBase();
 
      }*/
-     //updateUI();
+        //updateUI();
     }
-
 
 
     @Override
@@ -74,38 +73,36 @@ public class ListActivityEditor extends AppCompatActivity {
         if (id == android.R.id.home) {
             Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
-        }
-
-        else if (id == R.id.action_create) {
+        } else if (id == R.id.action_create) {
             switch (item.getItemId()) {
-            case R.id.action_create:
-                final EditText taskEditText = new EditText(this);
-                AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle("New Task")
-                        .setMessage("Add a new task")
-                        .setView(taskEditText)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                String listName = String.valueOf(taskEditText.getText());
-                                //nameOfList(listName);
-                                SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
-                                ContentValues values = new ContentValues();
-                                values.put(Task.TaskEntry.COL_TASK_TITLE, listName);
+                case R.id.action_create:
+                    final EditText taskEditText = new EditText(this);
+                    AlertDialog dialog = new AlertDialog.Builder(this)
+                            .setTitle("New Task")
+                            .setMessage("Add a new task")
+                            .setView(taskEditText)
+                            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    String listName = String.valueOf(taskEditText.getText());
+                                    //nameOfList(listName);
+                                    SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
+                                    ContentValues values = new ContentValues();
+                                    values.put(Task.TaskEntry.COL_TASK_TITLE, listName);
 
-                                sQLiteDatabase.insertWithOnConflict(Task.TaskEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-                                sQLiteDatabase.close();
-                                updateUI();
-                            }
-                        })
+                                    sQLiteDatabase.insertWithOnConflict(Task.TaskEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                                    sQLiteDatabase.close();
+                                    updateUI();
+                                }
+                            })
 
-                        .setNegativeButton("Cancel", null)
-                        .create();
+                            .setNegativeButton("Cancel", null)
+                            .create();
 
-                dialog.show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                    dialog.show();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
 
             }
         }
@@ -113,23 +110,22 @@ public class ListActivityEditor extends AppCompatActivity {
     }
 
 
-    public void updateUI(){
+    public void updateUI() {
 
         ArrayList<String> taskList = new ArrayList<>();
         SQLiteDatabase sQLiteDatabase = mHelper.getReadableDatabase();
         Cursor cursor = sQLiteDatabase.query(Task.TaskEntry.TABLE,
-                        new String[] {Task.TaskEntry._ID, Task.TaskEntry.COL_TASK_TITLE}, null, null, null, null, null);
+                new String[]{Task.TaskEntry._ID, Task.TaskEntry.COL_TASK_TITLE}, null, null, null, null, null);
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int index = cursor.getColumnIndex(Task.TaskEntry.COL_TASK_TITLE);
             taskList.add(cursor.getString(index));
         }
 
-        if(mAdapter == null){
+        if (mAdapter == null) {
             mAdapter = new ArrayAdapter<>(this, R.layout.item_todo, R.id.task_title, taskList);
             mTaskListView.setAdapter(mAdapter);
-        }
-        else {
+        } else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
@@ -140,12 +136,12 @@ public class ListActivityEditor extends AppCompatActivity {
 
     }
 
-    public void deleteTask(View view){
-    View parent = (View) view.getParent();
+    public void deleteTask(View view) {
+        View parent = (View) view.getParent();
         TextView taskTExtView = (TextView) parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTExtView.getText());
         SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
-        sQLiteDatabase.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE + " = ?", new String[] {task});
+        sQLiteDatabase.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE + " = ?", new String[]{task});
         sQLiteDatabase.close();
         updateUI();
     }

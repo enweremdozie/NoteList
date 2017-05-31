@@ -25,31 +25,23 @@ import android.widget.Toast;
 import com.example.android.notelist.R;
 import com.example.android.notelist.com.example.android.notelist.data.NoteItem;
 
-/**
- * Created by dozie on 2017-05-13.
- */
 
 public class NoteEditorActivity extends AppCompatActivity {
 
-    private NoteItem note;
     TextView displayText;
     String textOnScreen;
-    private LocationManager locationManager;
-    private LocationListener listener;
     double longi_tude = 0;
     double lati_tude = 0;
-
     TextView textView;
-
     String loc = "doesnt work";
-
     int locationSearch = 0;
-
     String map;
     String lati;
     String longi;
     String loca;
-
+    private NoteItem note;
+    private LocationManager locationManager;
+    private LocationListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +54,8 @@ public class NoteEditorActivity extends AppCompatActivity {
         note = new NoteItem();
         note.setKey(intent.getStringExtra("key"));
         note.setText(intent.getStringExtra("text"));
-        note.setLati_tude(intent.getDoubleExtra("lati_tude", lati_tude));
-        note.setLongi_tude(intent.getDoubleExtra("longi_tude", longi_tude));
+        note.setLatitude(intent.getDoubleExtra("lati_tude", lati_tude));
+        note.setLongitude(intent.getDoubleExtra("longi_tude", longi_tude));
         map = "geo:";
         lati = String.valueOf(lati_tude);
         longi = String.valueOf(longi_tude);
@@ -83,7 +75,7 @@ public class NoteEditorActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 //Log.d("CREATION", "it has entered");
                 //loc = ("\n " + location.getLongitude() + " " + location.getLatitude());
-                if(locationSearch == 0) {
+                if (locationSearch == 0) {
                     longi_tude = location.getLongitude();
                     lati_tude = location.getLatitude();
                     Toast.makeText(getApplicationContext(), "Location saved", Toast.LENGTH_SHORT).show();
@@ -115,12 +107,12 @@ public class NoteEditorActivity extends AppCompatActivity {
         //configure_button();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.find_location);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if(item.getItemId() == R.id.get_loc) {
+                if (item.getItemId() == R.id.get_loc) {
                     Uri gmmIntentUri = Uri.parse(loca);
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
@@ -197,17 +189,14 @@ public class NoteEditorActivity extends AppCompatActivity {
         //Log.d("CREATION", "enters here 1");
         if (item.getItemId() == android.R.id.home) {
             saveAndFinish();
-        }
-
-        else if (item.getItemId() == R.id.location) {
+        } else if (item.getItemId() == R.id.location) {
             Toast.makeText(getApplicationContext(), "Getting location", Toast.LENGTH_LONG).show();
             locationSearch = 0;
-        configure_button();
+            configure_button();
         }
 
         return false;
     }
-
 
 
     @Override

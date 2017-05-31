@@ -4,13 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by dozie on 2017-05-23.
- */
 
 public class ListNamesHelper extends SQLiteOpenHelper {
 
-    public ListNamesHelper(Context context){
+    public ListNamesHelper(Context context) {
         super(context, ListNames.DB_NAME, null, ListNames.DB_VERSION);
 
     }
