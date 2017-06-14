@@ -72,7 +72,7 @@ git diff <outdated_branch>..<up_to_date_branch> (compare changes in <outdated_br
 BRANCHING
 git branch (show local branches)
 git branch <new_local_branch_alias> <origin_branch> (create a new branch <new_local_branch_alias> from <origin_branch>). (Origin branch can be HEAD to default to the tip of the current repository))
-*git checkout -b <new_local_branch_alias> <optional source_branch> (Create a new branch <new_local_branch_alias> from current branch or <source_branch> and switch to new branch). This is preferred to git branch <new_local_branch_alias> <origin_branch>
+*git checkout -b <new_local_branch_alias> <source_branch> (Create a new branch <new_local_branch_alias> from current branch or <source_branch> and switch to new branch). This is preferred to git branch <new_local_branch_alias> <origin_branch>
 git branch -d <branch_name> (Delete a branch)
 git branch --set-upstream <local_branch_alias> <remote_branch_alias> (Make non tracking branch track remote branch)
 git branch -vv (show local branches and remote branches they are tracking)
