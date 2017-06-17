@@ -103,3 +103,6 @@ git mergetool --tool=<mergetool> (indicate which mergetool to use to resolve mer
 DELETE
 git push <remote_origin> :<local_branch_alias> (Remove remote branch <local_branch_alias>. This does not remove the branch in the working directory)
 *git push origin --delete <local_branch_alias> (Remove remote branch <local_branch_alias>. This is preferred to git push <remote_origin> :<local_branch_alias>)
+
+LINKS
+http://codethug.com/2013/09/20/4-ways-to-ignore-files-with-git/ (4 Ways to ignore files and when those files can be ignored)
