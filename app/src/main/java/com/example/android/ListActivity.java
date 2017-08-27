@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
     private static final String TAG = "ListActivity";
-    private ListHelper mHelper;
+    private ListHelper dbHelper;
     private ListView mTaskListView;
     private ArrayAdapter<String> mAdapter;
 
@@ -41,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mHelper = new ListHelper(this);
+        dbHelper = new ListHelper(this);
         mTaskListView = (ListView) findViewById(R.id.list_todo);
         //updateUI();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.list_bottom_navigation);
@@ -56,6 +56,7 @@ public class ListActivity extends AppCompatActivity {
 
                 return true;
             }
+
         });
 
         mTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,12 +93,12 @@ public class ListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
+       /* if (id == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        }
+        }*/
 
-        else if (id == R.id.action_create) {
+         if (id == R.id.action_create) {
             switch (item.getItemId()) {
                 case R.id.action_create:
                     final EditText taskEditText = new EditText(this);
@@ -110,7 +111,7 @@ public class ListActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int which) {
                                     String task = String.valueOf(taskEditText.getText());
                                     //Log.d("CREATION", "List name is " + task);
-                                    SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
+                                    SQLiteDatabase sQLiteDatabase = dbHelper.getWritableDatabase();
                                     ContentValues values = new ContentValues();
                                     values.put(ListNames.ListEntry.COL_TASK_TITLE, task);
                                     sQLiteDatabase.insertWithOnConflict(ListNames.ListEntry.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -138,7 +139,7 @@ public class ListActivity extends AppCompatActivity {
     public void updateUI(){
         ArrayList<String> taskList = new ArrayList<>();
         Log.d("CREATION", "reaches 1");
-        SQLiteDatabase sQLiteDatabase = mHelper.getReadableDatabase();
+        SQLiteDatabase sQLiteDatabase = dbHelper.getReadableDatabase();
         Log.d("CREATION", "reaches 2");
         Cursor cursor = sQLiteDatabase.query(ListNames.ListEntry.TABLE,
                 new String[] {ListNames.ListEntry._ID, ListNames.ListEntry.COL_TASK_TITLE}, null, null, null, null, null);
@@ -167,7 +168,7 @@ public class ListActivity extends AppCompatActivity {
         View parent = (View) view.getParent();
         TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTextView.getText());
-        SQLiteDatabase sQLiteDatabase = mHelper.getWritableDatabase();
+        SQLiteDatabase sQLiteDatabase = dbHelper.getWritableDatabase();
         sQLiteDatabase.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE + " = ?", new String[] {task});
         sQLiteDatabase.close();
         updateUI();
@@ -175,6 +176,3 @@ public class ListActivity extends AppCompatActivity {
 
 
 }
-
-
-

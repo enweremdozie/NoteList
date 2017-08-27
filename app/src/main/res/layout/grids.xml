@@ -22,7 +22,8 @@
         android:textSize="18sp"
         android:ellipsize="end"
         android:background="@drawable/round_corner"
-        android:maxLines="3"
+        android:maxLines="5"
+        android:textColor="#FAFAFA"
         ></TextView>
 
 

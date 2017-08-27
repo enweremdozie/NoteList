@@ -66,9 +66,9 @@ public class GridActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                    if(item.getItemId() == R.id.list_menu) {
-                        callListActivity();
-                    }
+                if(item.getItemId() == R.id.list_menu) {
+                    callListActivity();
+                }
 
                 return true;
             }
@@ -78,7 +78,6 @@ public class GridActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int position, long id) {
                 // TODO Auto-generated method stub
-
                 Log.d("CREATION", "long clicked worked");
                 //registerForContextMenu(gridView);
                 currentNoteId = position;
@@ -101,11 +100,11 @@ public class GridActivity extends AppCompatActivity {
 
     }
 
-        private void callListActivity(){
-            Intent j = new Intent(this, ListActivity.class);
-            startActivity(j);
+    private void callListActivity(){
+        Intent j = new Intent(this, ListActivity.class);
+        startActivity(j);
 
-        }
+    }
 
     private void refreshDisplay() {
 

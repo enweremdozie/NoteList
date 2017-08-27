@@ -54,7 +54,6 @@ public class NoteActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int position, long id) {
                 // TODO Auto-generated method stub
-
                 Log.d("CREATION", "long clicked worked");
                 lv = (ListView) findViewById(R.id.list);
                 registerForContextMenu(lv);
@@ -131,15 +130,15 @@ public class NoteActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
-        intent.putExtra("text", note.getText());
+        //intent.putExtra("text", note.getText());
         // Log.d("CREATION","intent continue works");
         //notesList.add(note);
         //notes.notifyDataSetChanged();
 
         //notesList = dataSource.findAll();
 
-            startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
-            //refreshDisplay();
+        startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
+        //refreshDisplay();
 
     }
 
@@ -147,7 +146,7 @@ public class NoteActivity extends AppCompatActivity {
         NoteItem note = notesList.get(position);
         Intent intent = new Intent(this, NoteEditorActivity.class);
         intent.putExtra("key", note.getKey());
-        intent.putExtra("text", note.getText());
+        //intent.putExtra("text", note.getText());
         //currentNoteId = position;
         startActivityForResult(intent, EDITOR_ACTIVITY_REQUEST);
     }
@@ -157,7 +156,7 @@ public class NoteActivity extends AppCompatActivity {
         if(requestCode == EDITOR_ACTIVITY_REQUEST && resultCode == RESULT_OK){
             NoteItem note  = new NoteItem();
             note.setKey(data.getStringExtra("key"));
-            note.setText(data.getStringExtra("text"));
+            //note.setText(data.getStringExtra("text"));
             dataSource.update(note);
             refreshDisplay();
         }
@@ -201,6 +200,3 @@ public class NoteActivity extends AppCompatActivity {
         super.registerForContextMenu(view);
     }
 }
-
-
-

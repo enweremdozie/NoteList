@@ -9,7 +9,8 @@
     <string name="lower_menu">Notes</string>
     <string name="list_lower_menu">List</string>
     <string name="location">Add location</string>
-    <string name="loc">Get location</string>
+    <string name="loc">Show location on map</string>
+    <string name="hello_world">hello</string>
 
 
     <!--string-array name="android_versions">

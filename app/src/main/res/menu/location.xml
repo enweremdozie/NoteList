@@ -10,7 +10,5 @@
         android:orderInCategory="200"
         app:showAsAction="always|withText"
         android:icon="@drawable/ic_location"
-        android:title="@string/location"
-
-        />
+        android:title="@string/location" />
 </menu>

@@ -62,11 +62,9 @@ public class NoteItem{
         return note;
 
     }
-///////////remember problem for longitude and latitude might be here
+    ///////////remember problem for longitude and latitude might be here
     @Override
     public String toString() {
         return this.getText();
     }
 }
-
-

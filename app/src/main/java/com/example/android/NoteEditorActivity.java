@@ -36,8 +36,8 @@ public class NoteEditorActivity extends AppCompatActivity {
     String textOnScreen;
     private LocationManager locationManager;
     private LocationListener listener;
-    double longi_tude = 0;
-    double lati_tude = 0;
+    double longi_tude;
+    double lati_tude;
 
     TextView textView;
 
@@ -146,8 +146,9 @@ public class NoteEditorActivity extends AppCompatActivity {
     }
 
     void configure_button() {
-        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
 
+        //locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+        Log.d("CREATION", "it gets here" );
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
@@ -158,7 +159,7 @@ public class NoteEditorActivity extends AppCompatActivity {
 
             }
 
-            Log.d("CREATION", "this is the location " + loc);
+
             return;
         }
 
@@ -202,7 +203,7 @@ public class NoteEditorActivity extends AppCompatActivity {
         else if (item.getItemId() == R.id.location) {
             Toast.makeText(getApplicationContext(), "Getting location", Toast.LENGTH_LONG).show();
             locationSearch = 0;
-        configure_button();
+            configure_button();
         }
 
         return false;
@@ -215,6 +216,3 @@ public class NoteEditorActivity extends AppCompatActivity {
         saveAndFinish();
     }
 }
-
-
-
